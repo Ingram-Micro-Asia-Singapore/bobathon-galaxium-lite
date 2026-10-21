@@ -21,7 +21,7 @@ US$1).
 | under 24 hours, or already cancelled | 0% |
 
 > **About the videos and pictures.** Each one replays a real run of this lab: Bob Shell 2.0.6 (Bob's command-line
-> version, same agent, models and modes), 20 Oct 2026. The IDE around Bob's output is recreated, and waiting time is
+> version, same agent, models and modes), 20–21 Oct 2026. The IDE around Bob's output is recreated, and waiting time is
 > cut. Bob's words, tool calls and results are real. **Your Bob will word things differently**, choose different
 > names and maybe take a different route. That's normal. Check your result against the "You should see" line, not
 > against the exact wording.
@@ -322,10 +322,21 @@ it.
 
 Pick **Reviewer** in the mode list (or type `/reviewer`).
 
-**Bob does:** reads the three files and answers in the shape the mode asks for: a short summary, then findings as
-`file:line - issue - suggested fix`, each marked BLOCKING or SUGGESTION. It doesn't edit anything.
+**Bob does:** reads the three files, plus any others it needs, and answers in the shape the mode asks for: a short
+summary, then findings as `file:line - issue - suggested fix`, each marked BLOCKING or SUGGESTION. It doesn't edit
+anything. There are no approvals to give, because there's nothing to change.
 
-**You should see:** *(our recorded run of this step is coming)*.
+**You should see:** a one-paragraph summary, then a list of findings, each with a file and line. Ours read six files
+(the three, plus `conftest.py`, `schemas.py` and `db.py`), changed none, and found three BLOCKING issues and three
+suggestions. It cost 0.08 Bobcoins. Two worth a look:
+
+- **The exact 7-day boundary isn't tested.** That's the question Bob asked in step 3.
+- **A flight that has already left gets 0%, the same as one leaving in 10 hours.** Bob calls that a bug. Our rules
+  say 0% for both, so it's a design question, not a bug.
+
+A reviewer gives you findings, not orders. You decide which ones matter.
+
+![Bob in Reviewer mode beside .bob/custom_modes.yaml: Read 6 files, then a code review that opens with a summary and lists findings by file and line](https://yeokimsiang.github.io/bobathon-galaxium-lite/media/kit-reviewer.png)
 
 **Why:** compare it with `/review`. Same goal, different tools: Reviewer is a mode you can write yourself, and its
 `groups: [read]` line guarantees it can't touch your code.

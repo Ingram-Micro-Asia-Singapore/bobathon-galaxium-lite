@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/ingram.css' | relative_url }}">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <img class="logo" src="{{ '/assets/ingram-logo.svg' | relative_url }}" alt="Ingram Micro" width="132" height="24">
+      <span class="eyebrow">Bobathon · IBM Bob lab</span>
+    </div>
+  </header>
+  <main class="wrap content">
+{{ content }}
+  </main>
+  <footer class="wrap foot">
+    <p>Ingram Micro Bobathon, 29 October 2026. Videos and pictures: a recreated Bob IDE around real Bob Shell 2.0.6
+    output. Your Bob's wording, names and numbers will differ.</p>
+  </footer>
+</body>
+</html>
