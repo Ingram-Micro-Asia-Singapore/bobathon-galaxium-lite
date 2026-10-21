@@ -31,7 +31,8 @@ US$1).
 
 **Contents:** [Before you start](#before-you-start) · [Set-up](#set-up-let-bob-set-itself-up) ·
 [1. Context](#step-1-give-bob-context) · [2. Ask](#step-2-understand-before-changing) ·
-[3. Plan](#step-3-plan-the-change) · [4. Build](#step-4-build-it-and-run-the-tests) ·
+[3. Plan](#step-3-plan-the-change) · [Context window](#bob-ide-only-watch-the-context-window) ·
+[4. Build](#step-4-build-it-and-run-the-tests) ·
 [5. MCP](#step-5-check-it-through-an-mcp-tool) · [Review](#bob-ide-only-review-before-you-commit) ·
 [6. Commit](#step-6-commit-it) · [7. Reviewer mode](#step-7-optional-a-second-opinion-in-reviewer-mode) ·
 [Rollback](#bob-ide-only-undo-a-change-with-rollback) · [The `.bob/` kit](#what-the-bob-kit-did) ·
@@ -49,7 +50,7 @@ US$1).
    Unzip it to a short path, for example `C:\lab` or `~/lab`. You get this guide and a `galaxium-lite` folder.
 4. **Open the `galaxium-lite` folder itself** in Bob IDE (File > Open Folder), not the folder above it. When Bob asks,
    choose **Yes, I trust the authors**. That's what lets Bob load the project's own settings in `.bob/`.
-5. **Open the Bob chat panel** and start a new chat.
+5. **Open the Bob chat panel** and start a new task (the **+** button).
 
 **How every step works:** pick the **mode** in the chat box (Agent, Plan or Ask), paste the **prompt**, send it,
 then **approve** each action when Bob asks. Bob shows you the exact command, file edit or tool call before it runs.
@@ -126,6 +127,10 @@ today**. (Ours said: "No refund / seat-release logic".)
 
 **Why:** you understand the code before you change it, and you know exactly what the feature will add.
 
+**Tip:** `@` adds context without making Bob search for it, which is faster and cheaper. Besides files you can
+mention a line range (`@/app/main.py:40-60`), a folder, `@problems`, `@terminal` (the last command and its output)
+and `@git-changes` (your uncommitted diff).
+
 ---
 
 ## Step 3: Plan the change
@@ -159,9 +164,36 @@ decides. If yours skips it, carry on.
 
 ---
 
+## Bob IDE only: watch the context window
+
+Everything Bob knows during a task sits in its **context window**: its own instructions, your project's rules and
+skills, every message, and every file and tool result it has read. Every prompt sends all of it again, so a long task
+costs more and, near the limit, Bob shortens older messages and loses detail. Before you build, look at what
+planning used, then clear it.
+
+1. **Still in the step 3 task**, click the **token usage indicator** at the top right of the chat panel. It shows how
+   full the window is (used / total). Hover it, or click it, for the breakdown.
+2. **Read the breakdown.** Most of it is fixed: **System prompt** and **Tool definitions** (Bob's own), **Rules**
+   (the `AGENTS.md` briefing you made in step 1), **Skills** (the project's `verify` skill among them) and **MCP
+   Tools** (from `.bob/mcp.json`; the app isn't running yet). **Messages** is this conversation: the subagent's
+   reading and the plan.
+3. **Click + (New task).** The indicator drops back: Messages is close to empty, and the fixed parts stay. The plan
+   task stays in your task list.
+
+**You should see:** a big **Messages** number in the planning task, and almost none in the new one. *Recording to
+come.*
+<!-- asset R14: the indicator hovered in the step 3 task, breakdown visible; R15: + New task, the indicator reset -->
+
+**Why:** the plan is saved in `plans/refund-preview.md`, so the build doesn't need the conversation that made it. A
+fresh task is cheaper, and Bob works from the plan rather than from half-remembered discussion. Start a new task
+whenever you change topic, or when Messages gets large.
+
+---
+
 ## Step 4: Build it and run the tests
 
-**Start a new chat first**, so the planning conversation stays out of the build.
+**Start a new task first** (the **+** button, if you skipped the section above), so the planning conversation stays
+out of the build. The `@` mention brings the plan back in.
 
 | Mode | Prompt |
 |---|---|
