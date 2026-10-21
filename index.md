@@ -31,7 +31,7 @@ US$1).
 
 **Contents:** [Before you start](#before-you-start) · [Set-up](#set-up-let-bob-set-itself-up) ·
 [1. Context](#step-1-give-bob-context) · [2. Ask](#step-2-understand-before-changing) ·
-[3. Plan](#step-3-plan-the-change) · [Context window](#bob-ide-only-watch-the-context-window) ·
+[More `@`](#bob-ide-only-mention-exactly-what-bob-needs) · [3. Plan](#step-3-plan-the-change) ·
 [4. Build](#step-4-build-it-and-run-the-tests) ·
 [5. MCP](#step-5-check-it-through-an-mcp-tool) · [Review](#bob-ide-only-review-before-you-commit) ·
 [6. Commit](#step-6-commit-it) · [7. Reviewer mode](#step-7-optional-a-second-opinion-in-reviewer-mode) ·
@@ -127,9 +127,50 @@ today**. (Ours said: "No refund / seat-release logic".)
 
 **Why:** you understand the code before you change it, and you know exactly what the feature will add.
 
-**Tip:** `@` adds context without making Bob search for it, which is faster and cheaper. Besides files you can
-mention a line range (`@/app/main.py:40-60`), a folder, `@problems`, `@terminal` (the last command and its output)
-and `@git-changes` (your uncommitted diff).
+---
+
+## Bob IDE only: mention exactly what Bob needs
+
+In step 2 you gave Bob a file with `@`. That's the quickest way to give Bob context: it gets exactly what you point
+at, instead of searching the project for it, which is slower and costs more. You can point at more than files. Stay
+in **Ask** mode; these prompts only read.
+
+**1. Open the list.** Type `@` in the chat box. Bob IDE suggests open and recent files, folders, recent commits, and
+three keywords: `problems`, `terminal` and `git-changes`. Keep typing to filter, then use the arrow keys and Enter.
+
+**2. A few lines, not the whole file.** Add `:first-last` after a file:
+
+| Mode | Prompt |
+|---|---|
+| **Ask** | `Why must this stay at the end of the file? @/app/main.py:119-122` |
+
+**You should see:** `FastApiMCP` reads the routes that exist when it's created, so a route added below it would not
+become an MCP tool. Keep that in mind for step 4: the new route has to go above these lines.
+
+**3. A whole folder.** Bob gets every file directly inside it (not its subfolders):
+
+| Mode | Prompt |
+|---|---|
+| **Ask** | `What do these tests cover, and what isn't tested yet? @/tests` |
+
+**You should see:** a summary of `test_bookings.py` and `test_flights.py` (and the fixtures in `conftest.py`), then
+Bob's list of gaps.
+
+*Recording to come.*
+<!-- asset R14: the @ dropdown open, keywords visible; R15: the line-range answer; R16: the folder answer -->
+
+**The rest of the list**, for later steps or your own projects:
+
+| Mention | Bob gets | Try it |
+|---|---|---|
+| `@git-changes` | Your uncommitted changes: `git status` and the diff | Step 6, before you commit |
+| `@terminal` | The last command in the terminal, with its output | When a command fails: `What went wrong? @terminal` |
+| `@problems` | The errors and warnings in the Problems panel | `Fix these @problems` |
+| `@` + a commit hash | That commit's message and diff | After step 6: type `@`, pick your commit from the list, ask `Explain this commit` |
+| `@https://…` | The page, as text | Point Bob at a library's docs |
+
+**Why:** Bob does better with the right context than with more of it. Pointing at three lines gets a sharper answer,
+for less, than pointing at the project.
 
 ---
 
@@ -164,36 +205,10 @@ decides. If yours skips it, carry on.
 
 ---
 
-## Bob IDE only: watch the context window
-
-Everything Bob knows during a task sits in its **context window**: its own instructions, your project's rules and
-skills, every message, and every file and tool result it has read. Every prompt sends all of it again, so a long task
-costs more and, near the limit, Bob shortens older messages and loses detail. Before you build, look at what
-planning used, then clear it.
-
-1. **Still in the step 3 task**, click the **token usage indicator** at the top right of the chat panel. It shows how
-   full the window is (used / total). Hover it, or click it, for the breakdown.
-2. **Read the breakdown.** Most of it is fixed: **System prompt** and **Tool definitions** (Bob's own), **Rules**
-   (the `AGENTS.md` briefing you made in step 1), **Skills** (the project's `verify` skill among them) and **MCP
-   Tools** (from `.bob/mcp.json`; the app isn't running yet). **Messages** is this conversation: the subagent's
-   reading and the plan.
-3. **Click + (New task).** The indicator drops back: Messages is close to empty, and the fixed parts stay. The plan
-   task stays in your task list.
-
-**You should see:** a big **Messages** number in the planning task, and almost none in the new one. *Recording to
-come.*
-<!-- asset R14: the indicator hovered in the step 3 task, breakdown visible; R15: + New task, the indicator reset -->
-
-**Why:** the plan is saved in `plans/refund-preview.md`, so the build doesn't need the conversation that made it. A
-fresh task is cheaper, and Bob works from the plan rather than from half-remembered discussion. Start a new task
-whenever you change topic, or when Messages gets large.
-
----
-
 ## Step 4: Build it and run the tests
 
-**Start a new task first** (the **+** button, if you skipped the section above), so the planning conversation stays
-out of the build. The `@` mention brings the plan back in.
+**Start a new task first** (the **+** button), so the planning conversation stays out of the build. The `@` mention
+brings the plan back in.
 
 | Mode | Prompt |
 |---|---|
@@ -274,6 +289,9 @@ Bob IDE has a built-in code review. Run it now, while the feature is still uncom
 | Mode | Prompt |
 |---|---|
 | Agent | `Commit the refund preview feature.` |
+
+**Bob IDE: look first.** Before you send it, try `What's in @git-changes? Anything I shouldn't commit?` in **Ask**
+mode. Bob gets your whole uncommitted diff in one go.
 
 **Bob does:** checks `git status` and the diff, runs the tests once more (`verify` again), stages the feature files by
 name and commits. Approve each command.
