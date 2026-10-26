@@ -20,6 +20,9 @@ about 2, roughly US$1; in Bob IDE, one long task costs more, so start a new task
 | 1 to 7 days | 50% |
 | under 24 hours, or already cancelled | 0% |
 
+**Try the app first:** [the app you're starting with](https://yeokimsiang.github.io/bobathon-galaxium-before/) runs in
+your browser, nothing to install. Cancel a booking: it can't tell you what you'd get back. That's what you'll add.
+
 > **About the videos.** They're cut from a real run of this lab in Bob IDE, 21 Oct 2026 (the rollback from an earlier
 > run the same day). Waiting is sped up (the
 > bar under the video says by how much) or cut, the camera zooms in on what matters, and a few things are blurred:
@@ -437,6 +440,11 @@ The project's `README.md` explains each file in `.bob/` line by line. Here is wh
 
 **Start again:** delete the `galaxium-lite` folder and unzip the download again. That restores the code, the git
 history and the settings in one go.
+
+**Here's what Bob built in our run:** [the finished app](https://yeokimsiang.github.io/bobathon-galaxium-after/),
+running in your browser (press Cancel on a booking), and
+[the code Bob wrote](https://github.com/yeokimsiang/bobathon-galaxium-after/commit/19486bfa370fdb28675f77677906a09f442cdc17).
+Compare it with yours: your Bob will have picked different names and wording.
 
 **Finished early?** `docs/STRETCH.md` adds origin, destination and price filters to `GET /flights`.
 
