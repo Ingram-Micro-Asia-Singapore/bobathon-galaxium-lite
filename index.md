@@ -451,5 +451,9 @@ Compare it with yours: your Bob will have picked different names and wording.
 ---
 
 Galaxium Lite is based on IBM's [Galaxium Travels](https://github.com/IBM/galaxium-travels) demo (Apache License 2.0),
-cut down for the Ingram Micro Bobathon, 29 October 2026. Source:
+cut down for the Ingram Micro Bobathon, 29 October 2026. The refund preview follows a scenario from IBM's Galaxium
+Travels demos, with simpler rules of our own, and the kit's Reviewer mode and verify skill are adapted from that repo's
+`.bob/` configuration. The videos and screenshots are recordings of IBM Bob; IBM, IBM Bob and the IBM logo are
+trademarks of International Business Machines Corporation. This guide: © 2026 Ingram Micro. All rights reserved.
+Source:
 [github.com/Ingram-Micro-Asia-Singapore/bobathon-galaxium-lite](https://github.com/Ingram-Micro-Asia-Singapore/bobathon-galaxium-lite).
